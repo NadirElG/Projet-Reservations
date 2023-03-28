@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Locality extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['postal_code','locality'];
+    protected $table = 'localities';
+    public $timestamps = false;
 }

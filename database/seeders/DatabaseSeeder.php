@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ArtistSeeder::class,
             TypeSeeder::class,
             RoleSeeder::class,
+            LocalitySeeder::class,
         ]);
     }
 
