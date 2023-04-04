@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             LocalitySeeder::class,
             LocationSeeder::class,
+            ShowSeeder::class,
         ]);
     }
 
