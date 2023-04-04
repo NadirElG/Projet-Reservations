@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,11 @@ Route::get('/artist/create', [ArtistController::class, 'create'])->name('artist.
 Route::post('/artist', [ArtistController::class, 'store'])->name('artist.store');
 Route::delete('/artist/{id}', [ArtistController::class, 'destroy'])
 	->where('id', '[0-9]+')->name('artist.delete');
+
+Route::get('/type', [TypeController::class, 'index'])->name('type.index');
+Route::get('/type/{id}', [TypeController::class, 'show'])
+            ->where('id', '[0-9]+')->name('type.show');
+    
 
 
 
