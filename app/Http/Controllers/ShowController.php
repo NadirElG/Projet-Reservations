@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Location;
-use App\Models\Locality;
+use App\Models\Show;
 
-
-class LocationController extends Controller
+class ShowController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +14,11 @@ class LocationController extends Controller
      */
     public function index()
     {
-        $locations = Location::all();
+        $shows = Show::all();
         
-        return view('location.index',[
-            'locations' => $locations,
-            'resource' => 'lieux',
+        return view('show.index',[
+            'shows' => $shows,
+            'resource' => 'spectacles',
         ]);
     }
 
@@ -53,12 +51,13 @@ class LocationController extends Controller
      */
     public function show($id)
     {
-        $location = Location::find($id);
-        
-        return view('location.show',[
-            'location' => $location,
-        ]);
+        $show = Show::find($id);
+        return view('show.show',[
+            'show' => $show,
+        ]);    
     }
+
+
     /**
      * Show the form for editing the specified resource.
      *

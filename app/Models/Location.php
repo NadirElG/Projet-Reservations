@@ -23,10 +23,10 @@ class Location extends Model
     /**
      * Get the locality of the location
      */
-    public function locality()
-    {
-        return $this->belongsTo('App\Locality');
+    public function locality(){
+        return $this->belongsTo(Locality::class);
     }
+
     /**
      * Get the shows in this location.
      */
@@ -34,6 +34,14 @@ class Location extends Model
     {
         return $this->hasMany(Show::class);
     }
+    /**
+     * Get the representations in this location.
+     */
+    public function representations()
+    {
+        return $this->hasMany(Representation::class);
+    }
+
 
 
 }
