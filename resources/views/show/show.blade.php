@@ -64,8 +64,8 @@
             @elseif(!$loop->last), @endif
         @endforeach
         </p>
-
     </article>
+
 
     <nav><a href="{{ route('show_index') }}">Retour à l'index</a></nav>
 @endsection
