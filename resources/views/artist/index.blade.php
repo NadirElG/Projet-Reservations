@@ -34,6 +34,7 @@
                             <td>
                                 <a href="{{ route('artist.show', $artist->id) }}" class="btn btn-sm btn-outline-primary">Voir</a>
                                 <a href="{{ route('artist.edit', $artist->id) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                                
                             </td>
                         </tr>
                     @endforeach
