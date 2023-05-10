@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TicketmasterController;
+
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\RoleController;
@@ -29,6 +31,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/theatres', [TicketmasterController::class, 'getTheatreData']);
 
 Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
 Route::get('/artist/{id}', [ArtistController::class, 'show'])
