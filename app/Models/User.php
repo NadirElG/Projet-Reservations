@@ -41,4 +41,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function representations() {
+        return $this->belongsToMany(Representation::class, 'reservations')->using(Reservation::class)->withTimestamps();
+    }
+    
+    
 }
