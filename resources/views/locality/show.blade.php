@@ -13,3 +13,5 @@
     
     <nav><a href="{{ route('locality.index') }}">Retour à l'index</a></nav>
 @endsection
+
+

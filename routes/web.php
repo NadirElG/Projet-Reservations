@@ -31,6 +31,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/theatres', [TicketmasterController::class, 'getTheatreData']);
 
 Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
