@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Role;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -45,6 +47,11 @@ class User extends Authenticatable
     public function representations() {
         return $this->belongsToMany(Representation::class, 'reservations')->using(Reservation::class)->withTimestamps();
     }
+
+    public function roles() {
+    return $this->belongsToMany(Role::class, 'user_roles')->withTimestamps();
+    }
+
     
     
 }
