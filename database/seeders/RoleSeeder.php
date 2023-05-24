@@ -20,9 +20,9 @@ class RoleSeeder extends Seeder
         Role::truncate();
         //Define data
         $roles = [
-            ['role'=>'comédien'],
-            ['role'=>'scénographe'],
-            ['role'=>'auteur'],
+            ['role'=>'admin'],
+            ['role'=>'member'],
+            ['role'=>'author'],
         ];
         //Insert data in the table
         DB::table('roles')->insert($roles);

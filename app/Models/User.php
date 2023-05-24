@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Models\Role;
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -48,10 +46,18 @@ class User extends Authenticatable
         return $this->belongsToMany(Representation::class, 'reservations')->using(Reservation::class)->withTimestamps();
     }
 
-    public function roles() {
-    return $this->belongsToMany(Role::class, 'user_roles')->withTimestamps();
+    public function role() {
+        return $this->belongsTo(Role::class);
     }
 
-    
-    
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            // Attribuer le rôle "member" à l'utilisateur
+            $user->role()->associate(2); // 2 correspond à l'ID du rôle "member"
+            $user->save();
+        });
+    }
 }
