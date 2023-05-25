@@ -34,17 +34,17 @@
         </div>
 
         <h2 class="mt-5">Liste des représentations</h2>
-        @if($show->representations->count()>=1)
+        @if($show->representations->count() >= 1)
             <ul>
                 @foreach ($show->representations as $representation)
                     <li>{{ $representation->when }} 
-                    @if($representation->location)
-                    ({{ $representation->location->designation }})
-                    @elseif($representation->show->location)
-                    ({{ $representation->show->location->designation }})
-                    @else
-                    (lieu à déterminer)
-                    @endif
+                        @if($representation->location)
+                            ({{ $representation->location->designation }})
+                        @elseif($representation->show->location)
+                            ({{ $representation->show->location->designation }})
+                        @else
+                            (lieu à déterminer)
+                        @endif
                     </li>
                 @endforeach
             </ul>
@@ -54,27 +54,52 @@
 
         <h2 class="mt-5">Liste des artistes</h2>
         <p><strong>Auteur:</strong>
-        @foreach ($collaborateurs['auteur'] as $auteur)
-            {{ $auteur->firstname }} 
-            {{ $auteur->lastname }}@if($loop->iteration == $loop->count-1) et 
-            @elseif(!$loop->last), @endif
-        @endforeach
-        </p>
-        <p><strong>Metteur en scène:</strong>
-        @foreach ($collaborateurs['scénographe'] as $scenographe)
-            {{ $scenographe->firstname }} 
-            {{ $scenographe->lastname }}@if($loop->iteration == $loop->count-1) et 
-            @elseif(!$loop->last), @endif
-        @endforeach
-        </p>
-        <p><strong>Distribution:</strong>
-        @foreach ($collaborateurs['comédien'] as $comedien)
-            {{ $comedien->firstname }} 
-            {{ $comedien->lastname }}@if($loop->iteration == $loop->count-1) et 
-            @elseif(!$loop->last), @endif
-        @endforeach
+            @if (isset($collaborateurs['auteur']) && count($collaborateurs['auteur']) > 0)
+                @foreach ($collaborateurs['auteur'] as $auteur)
+                    {{ $auteur->firstname }} {{ $auteur->lastname }}
+                    @if ($loop->iteration == $loop->count - 1)
+                        et
+                    @elseif (!$loop->last)
+                        ,
+                    @endif
+                @endforeach
+            @else
+                Aucun auteur trouvé.
+            @endif
         </p>
 
-        <nav class="mt-5"><a href="{{ route('show_index') }}" class="btn btn-primary">Retour à l'index</a></nav>
+        <p><strong>Metteur en scène:</strong>
+            @if (isset($collaborateurs['scénographe']) && count($collaborateurs['scénographe']) > 0)
+                @foreach ($collaborateurs['scénographe'] as $scenographe)
+                    {{ $scenographe->firstname }} {{ $scenographe->lastname }}
+                    @if ($loop->iteration == $loop->count - 1)
+                        et
+                    @elseif (!$loop->last)
+                        ,
+                    @endif
+                @endforeach
+            @else
+                Aucun metteur en scène trouvé.
+            @endif
+        </p>
+
+        <p><strong>Distribution:</strong>
+            @if (isset($collaborateurs['comédien']) && count($collaborateurs['comédien']) > 0)
+                @foreach ($collaborateurs['comédien'] as $comedien)
+                    {{ $comedien->firstname }} {{ $comedien->lastname }}
+                    @if ($loop->iteration == $loop->count - 1)
+                        et
+                    @elseif (!$loop->last)
+                        ,
+                    @endif
+                @endforeach
+            @else
+                Aucune distribution trouvée.
+            @endif
+        </p>
+
+        <nav class="mt-5">
+            <a href="{{ route('show_index') }}" class="btn btn-primary">Retour à l'index</a>
+        </nav>
     </div>
 @endsection
