@@ -8,7 +8,7 @@
             <div class="row no-gutters">
                 <div class="col-md-4">
                     @if($show->poster_url)
-                        <img src="{{ asset('images/'.$show->poster_url) }}" alt="{{ $show->title }}" class="card-img" style="object-fit: cover; height: 100%; width: 100%;">
+                        <img src="{{ asset('images/'.$show->poster_url) }}" alt="{{ $show->title }}" class="card-img img-fluid" style="object-fit: cover;">
                     @else
                         <div style="width:100%; height:100%; background-color: #000;"></div>
                     @endif
@@ -25,6 +25,22 @@
 
                         @if($show->bookable)
                             <p><em>Réservable</em></p>
+                            <form method="POST" action="{{ route('addmoney.stripe') }}">
+                                @csrf
+                                <input type="hidden" name="show_id" value="{{ $show->id }}">
+                                <script
+                                    src="https://checkout.stripe.com/checkout.js"
+                                    class="stripe-button"
+                                    data-key="{{ env('STRIPE_KEY') }}"
+                                    data-amount="{{ $show->price * 100 }}"
+                                    data-name="Acheter un billet pour {{ $show->title }}"
+                                    data-description="Paiement pour {{ $show->title }}"
+                                    data-image="{{ asset('images/stripe-logo.png') }}"
+                                    data-locale="auto"
+                                    data-currency="eur"
+                                >
+                                </script>
+                            </form>
                         @else
                             <p><em>Non réservable</em></p>
                         @endif
@@ -67,39 +83,22 @@
                 Aucun auteur trouvé.
             @endif
         </p>
-
-        <p><strong>Metteur en scène:</strong>
-            @if (isset($collaborateurs['scénographe']) && count($collaborateurs['scénographe']) > 0)
-                @foreach ($collaborateurs['scénographe'] as $scenographe)
-                    {{ $scenographe->firstname }} {{ $scenographe->lastname }}
-                    @if ($loop->iteration == $loop->count - 1)
-                        et
-                    @elseif (!$loop->last)
-                        ,
-                    @endif
-                @endforeach
-            @else
-                Aucun metteur en scène trouvé.
-            @endif
-        </p>
-
-        <p><strong>Distribution:</strong>
-            @if (isset($collaborateurs['comédien']) && count($collaborateurs['comédien']) > 0)
-                @foreach ($collaborateurs['comédien'] as $comedien)
-                    {{ $comedien->firstname }} {{ $comedien->lastname }}
-                    @if ($loop->iteration == $loop->count - 1)
-                        et
-                    @elseif (!$loop->last)
-                        ,
-                    @endif
-                @endforeach
-            @else
-                Aucune distribution trouvée.
-            @endif
-        </p>
-
-        <nav class="mt-5">
-            <a href="{{ route('show_index') }}" class="btn btn-primary">Retour à l'index</a>
-        </nav>
+        <p>Autres artistes:</p>
+        <ul>
+            @foreach ($collaborateurs as $type => $artistes)
+                @if ($type !== 'auteur' && count($artistes) > 0)
+                    <li><strong>{{ ucfirst($type) }}:</strong>
+                        @foreach ($artistes as $artiste)
+                            {{ $artiste->firstname }} {{ $artiste->lastname }}
+                            @if ($loop->iteration == $loop->count - 1)
+                                et
+                            @elseif (!$loop->last)
+                                ,
+                            @endif
+                        @endforeach
+                    </li>
+                @endif
+            @endforeach
+        </ul>
     </div>
 @endsection

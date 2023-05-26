@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Show;
+use App\Models\Location;
 
 class ShowController extends Controller
 {
@@ -29,7 +30,9 @@ class ShowController extends Controller
      */
     public function create()
     {
-        //
+    $locations = Location::all(); // Récupérez tous les emplacements pour le formulaire de sélection
+
+    return view('show.create', compact('locations'));
     }
 
     /**
@@ -101,4 +104,15 @@ class ShowController extends Controller
     {
         //
     }
+
+    public function processPayment(Request $request)
+    {
+    // Votre logique de traitement de paiement ici
+    // Par exemple, vous pouvez créer une transaction dans votre base de données
+    // et rediriger l'utilisateur vers une page de confirmation de paiement
+    
+    // Exemple de redirection vers une page de confirmation
+    return redirect()->route('payment_confirmation');
+    }
+
 }

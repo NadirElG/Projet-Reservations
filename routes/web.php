@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Middleware\AdminMiddleware;
+
 use App\Http\Controllers\TicketmasterController;
 
 use App\Http\Controllers\ArtistController;
@@ -14,6 +16,8 @@ use App\Http\Controllers\LocationController;
 
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\RepresentationController;
+
+use App\Http\Controllers\StripePaymentController;
 
 
 /*
@@ -64,6 +68,9 @@ Route::get('/location/{id}', [LocationController::class, 'show'])
 Route::get('/show', [ShowController::class, 'index'])->name('show_index');
 Route::get('/show/{id}', [ShowController::class, 'show'])
     ->where('id', '[0-9]+')->name('show_show');
+Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
+Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+
 
 Route::get('/representation', [RepresentationController::class, 'index'])
     ->name('representation.index');
@@ -87,6 +94,10 @@ Route::middleware('auth')->group(function () {
 Route::post('/logout', 'Auth\AuthenticatedSessionController@destroy')
     ->middleware('auth')
     ->name('logout');
+
+Route::post('/stripe', [StripePaymentController::class, 'postPaymentStripe'])->name('addmoney.stripe');
+//Route::post('/add-money-stripe', [StripePaymentController::class, 'postPaymentStripe'])->name('addmoney.stripe');
+
 
 
 require __DIR__.'/auth.php';
