@@ -68,8 +68,13 @@ Route::get('/location/{id}', [LocationController::class, 'show'])
 Route::get('/show', [ShowController::class, 'index'])->name('show_index');
 Route::get('/show/{id}', [ShowController::class, 'show'])
     ->where('id', '[0-9]+')->name('show_show');
-Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
-Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+//Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
+//Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
+    Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+});
+
 
 
 Route::get('/representation', [RepresentationController::class, 'index'])
