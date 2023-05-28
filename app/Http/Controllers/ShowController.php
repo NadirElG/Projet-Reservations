@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
+
+
 use App\Models\Show;
 use App\Models\Location;
 
@@ -54,23 +58,24 @@ class ShowController extends Controller
      */
     public function show($id)
     {
-        $show = Show::find($id);
-        
-        //Récupérer les artistes du spectacle et les grouper par type
-        $collaborateurs = [];
-        
-        foreach($show->artistTypes as $at) {
-            $collaborateurs[$at->type->type][] = $at->artist;
-        }
-        
-        return view('show.show',[
-            'show' => $show,
-            'collaborateurs' => $collaborateurs,
-        ]);
+    $show = Show::find($id);
+    
+    //Récupérer les artistes du spectacle et les grouper par type
+    $collaborateurs = [];
+    
+    foreach($show->artistTypes as $at) {
+        $collaborateurs[$at->type->type][] = $at->artist;
     }
-
-
-
+    
+    // Récupérer les éléments du flux RSS
+    $rssItems = $show->getRssItems();
+    
+    return view('show.show',[
+        'show' => $show,
+        'collaborateurs' => $collaborateurs,
+        'rssItems' => $rssItems, // Ajoutez cette ligne
+    ]);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -114,5 +119,8 @@ class ShowController extends Controller
     // Exemple de redirection vers une page de confirmation
     return redirect()->route('payment_confirmation');
     }
+
+    
+
 
 }

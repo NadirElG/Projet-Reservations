@@ -55,4 +55,39 @@ class Show extends Model
     {
         return $this->belongsToMany(ArtistType::class);
     }
+
+    /**
+     * Get the RSS feed items for the show.
+     *
+     * @return array
+     */
+    public function getRssItems()
+    {
+        $items = [];
+
+        foreach ($this->representations as $representation) {
+            $item = [
+                'title' => $this->title,
+                'link' => $this->getShowUrl(),
+                'description' => $representation->getFormattedDateTime(),
+            ];
+
+            $items[] = $item;
+        }
+
+        return $items;
+    }
+
+    /**
+     * Get the URL of the show.
+     *
+     * @return string
+     */
+    public function getShowUrl()
+    {
+        // Replace 'your-route-name' with the actual route name for the show details page
+return route('show_show', ['id' => $this->id]);
+    }
+
+
 }

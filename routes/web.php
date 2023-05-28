@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 
 use App\Http\Controllers\TicketmasterController;
+use App\Http\Controllers\FeedController;
+
 
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\TypeController;
@@ -36,8 +38,14 @@ Route::get('/', function () {
 });
 
 
-
+Route::get('/feeds', [FeedController::class, 'index'])->name('feeds');
 Route::get('/theatres', [TicketmasterController::class, 'getTheatreData']);
+
+Route::get('/shows/{id}', [ShowController::class, 'show'])->name('show.details');
+
+
+Route::get('show/{id}/rss', [ShowController::class, 'rss']);
+
 
 Route::get('/artist', [ArtistController::class, 'index'])->name('artist.index');
 Route::get('/artist/{id}', [ArtistController::class, 'show'])
@@ -76,6 +84,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/show', [ShowController::class, 'store'])->name('show.store');
 });
 */
+
+
 
 
 

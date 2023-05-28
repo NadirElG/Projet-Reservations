@@ -21,4 +21,11 @@
             </div>
         </div>
     </div>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                {{-- <a href="{{ route('feeds') }}" class="btn btn-primary">Go to Feeds</a> --}}
+            </div>
+        </div>
+    </div>
 @endsection

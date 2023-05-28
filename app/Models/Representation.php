@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
+
 class Representation extends Model
 {
     use HasFactory;
@@ -55,6 +58,21 @@ class Representation extends Model
      */
     public function users() {
         return $this->belongsToMany(User::class, 'reservations')->using(Reservation::class)->withTimestamps();
+    }
+
+    /**
+     * Get the date and time of the representation in a formatted string.
+     *
+     * @return string
+     */
+    public function getFormattedDateTime()
+    {
+        // Convertit le champ 'when' en instance de Carbon
+        $datetime = Carbon::parse($this->when);
+
+        // Formate la date/heure comme souhaité. Ici, nous utilisons le format 'd M Y H:i', 
+        // mais vous pouvez le changer en fonction de vos besoins.
+        return $datetime->format('d M Y H:i');
     }
     
 }
