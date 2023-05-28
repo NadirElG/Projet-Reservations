@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Feed\FeedServiceProvider;
+
 
 use App\Http\Middleware\AdminMiddleware;
 
@@ -36,6 +38,8 @@ use App\Http\Controllers\StripePaymentController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::feeds();
 
 
 Route::get('/feeds', [FeedController::class, 'index'])->name('feeds');

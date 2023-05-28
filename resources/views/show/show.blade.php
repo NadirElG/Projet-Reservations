@@ -100,22 +100,6 @@
                 @endif
             @endforeach
         </ul>
-        <div class="container mt-5">
-            @if ($rssItems)
-            <div class="mt-5">
-                <h2>Flux RSS du spectacle</h2>
-                <ul>
-                    @foreach ($rssItems as $item)
-                        <li>
-                            <strong>{{ $item['title'] }}</strong> - {{ $item['description'] }}
-                            <br/>
-                            <a href="{{ $item['link'] }}">Lien vers le spectacle</a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-        </div>
     </div>
 
 

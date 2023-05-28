@@ -1,24 +1,19 @@
-@extends('layouts.app')
+{{-- resources/views/feeds.blade.php --}}
 
-@section('title', 'Flux RSS')
-
-@section('content')
-    <div class="container">
-        <h1>Flux RSS</h1>
-
-        @if ($items->count() > 0)
-            <ul>
-                @foreach ($items as $item)
-                    <li>
-                        <h3>{{ $item->title }}</h3>
-                        <p>{{ $item->description }}</p>
-                        <p>Date de publication : {{ $item->pubDate->toDateString() }}</p>
-                        <a href="{{ $item->link }}">Lien vers l'article</a>
-                    </li>
-                @endforeach
-            </ul>
-        @else
-            <p>Aucun article trouvé dans le flux RSS.</p>
-        @endif
-    </div>
-@endsection
+{{ '<?xml version="1.0" encoding="UTF-8"?>'."\n" }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{ env('APP_NAME') }}</title>
+        <link>{{ url('/') }}</link>
+        <description>Flux RSS pour {{ env('APP_NAME') }}</description>
+        <language>fr</language>
+        @foreach($items as $item)
+            <item>
+                <title>{{ $item->title }}</title>
+                <link>{{ $item->link }}</link>
+                <description>{{ $item->summary }}</description>
+                <pubDate>{{ $item->updated->toRfc2822String() }}</pubDate>
+            </item>
+        @endforeach
+    </channel>
+</rss>

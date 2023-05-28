@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 
-class Show extends Model
+class Show extends Model implements Feedable
 {
     use HasFactory;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
         'slug',
         'title',
@@ -22,45 +20,26 @@ class Show extends Model
         'bookable',
         'price',
     ];
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+
     protected $table = 'shows';
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
+
     public $timestamps = true;
-    /**
-     * Get the main location of the show
-     */
+
     public function location()
     {
         return $this->belongsTo(Location::class);
     }
-    /**
-     * Get the representations of this show.
-     */
+
     public function representations()
     {
         return $this->hasMany(Representation::class);
     }
-    /**
-     * Get the performances (artists in a type of collaboration) for the show
-     */
+
     public function artistTypes()
     {
         return $this->belongsToMany(ArtistType::class);
     }
 
-    /**
-     * Get the RSS feed items for the show.
-     *
-     * @return array
-     */
     public function getRssItems()
     {
         $items = [];
@@ -78,16 +57,28 @@ class Show extends Model
         return $items;
     }
 
-    /**
-     * Get the URL of the show.
-     *
-     * @return string
-     */
     public function getShowUrl()
     {
-        // Replace 'your-route-name' with the actual route name for the show details page
-return route('show_show', ['id' => $this->id]);
+        return route('show_show', ['id' => $this->id]);
     }
+
+    public function getFeedItems()
+    {
+        return Show::all();
+    }
+
+    public function toFeedItem(): FeedItem
+{
+    $updated = $this->updated_at ?? $this->created_at;
+
+    return FeedItem::create()
+        ->id($this->id)
+        ->title($this->title)
+        ->summary($this->description) // Utiliser la méthode summary() pour définir la description
+        ->updated($updated)
+        ->link($this->getShowUrl())
+        ->authorName("Votre nom d'auteur ici"); // Remplacez "Votre nom d'auteur ici" par le nom de l'auteur réel
+}
 
 
 }

@@ -14,7 +14,7 @@ class LocalityController extends Controller
      */
     public function index()
     {
-        $localities = Locality::all();
+        $localities = Locality::simplePaginate(10); 
 
         return view('locality.index',[
             'localities' => $localities,

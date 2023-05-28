@@ -20,6 +20,8 @@ class ShowController extends Controller
     public function index()
     {
         $shows = Show::all();
+
+        
         
         return view('show.index',[
             'shows' => $shows,
@@ -58,24 +60,19 @@ class ShowController extends Controller
      */
     public function show($id)
     {
-    $show = Show::find($id);
+        $show = Show::find($id);
     
-    //Récupérer les artistes du spectacle et les grouper par type
-    $collaborateurs = [];
-    
-    foreach($show->artistTypes as $at) {
-        $collaborateurs[$at->type->type][] = $at->artist;
+        $collaborateurs = [];
+        foreach($show->artistTypes as $at) {
+            $collaborateurs[$at->type->type][] = $at->artist;
+        }
+        
+        return view('show.show',[
+            'show' => $show,
+            'collaborateurs' => $collaborateurs,
+        ]);
     }
-    
-    // Récupérer les éléments du flux RSS
-    $rssItems = $show->getRssItems();
-    
-    return view('show.show',[
-        'show' => $show,
-        'collaborateurs' => $collaborateurs,
-        'rssItems' => $rssItems, // Ajoutez cette ligne
-    ]);
-    }
+
     /**
      * Show the form for editing the specified resource.
      *
