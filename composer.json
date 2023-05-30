@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "cartalyst/stripe-laravel": "^14.0",
         "guzzlehttp/guzzle": "^7.5",
+        "illuminate/pagination": "*",
         "laravel/cashier": "^14.12",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",

@@ -30,22 +30,21 @@
                                 <label for="location_id">Location</label>
                                 <select id="location_id" class="form-control" name="location_id" required>
                                     @foreach($locations as $location)
-                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        <option value="{{ $location->id }}">{{ $location->designation }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="bookable">Bookable</label>
-                                <input id="bookable" type="checkbox" class="form-control" name="bookable">
+                                <input id="bookable" type="checkbox" name="bookable" value="1">
                             </div>
+                            
 
                             <div class="form-group">
                                 <label for="price">Price</label>
                                 <input id="price" type="number" class="form-control" name="price" required>
                             </div>
-
-                            <div id="card-element"></div>
 
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>

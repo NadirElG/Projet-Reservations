@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 
 use App\Models\Show;
@@ -21,7 +22,7 @@ class ShowController extends Controller
     {
         $shows = Show::all();
 
-        
+
         
         return view('show.index',[
             'shows' => $shows,
@@ -36,10 +37,10 @@ class ShowController extends Controller
      */
     public function create()
     {
-    $locations = Location::all(); // Récupérez tous les emplacements pour le formulaire de sélection
-
-    return view('show.create', compact('locations'));
+        $locations = Location::all();
+        return view('show.create', ['locations' => $locations]);
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -49,8 +50,34 @@ class ShowController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    $show = new Show;
+    $show->title = $request->title;
+    $slug = Str::slug($request->title);
+    $originalSlug = $slug;
+    $counter = 2;
+
+    while (Show::whereSlug($slug)->exists()) {
+        $slug = "{$originalSlug}-" . $counter++;
     }
+
+    $show->slug = $slug;
+    $show->description = $request->description;
+    $show->poster_url = $request->poster_url;
+    $show->location_id = $request->location_id;
+    $show->bookable = $request->has('bookable');
+    $show->price = $request->price;
+    
+    try {
+        $show->save();
+    } catch (\Exception $e) {
+        // Gérer l'erreur ici, par exemple renvoyer à la page avec une erreur
+        return back()->withError($e->getMessage())->withInput();
+    }
+    
+    return redirect()->route('show_index');
+    }
+
+
 
     /**
      * Display the specified resource.

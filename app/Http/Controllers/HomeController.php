@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Show;
 use GuzzleHttp\Client;
 
-class TicketmasterController extends Controller
+class HomeController extends Controller
 {
-
-    public function getTheatreData()
+    public function index()
     {
+        //$shows = Show::all();
+        $shows = Show::take(10)->get();
+
+        // Fetching TicketMaster events
         $client = new Client(['base_uri' => 'https://app.ticketmaster.com/discovery/v2/']);
         $response = $client->request('GET', 'events.json', [
             'query' => [
@@ -20,11 +24,9 @@ class TicketmasterController extends Controller
         ]);
 
         $data = json_decode($response->getBody(), true);
+        $theatres = collect($data['_embedded']['events']);
 
-        // Utilisez la méthode paginate() pour paginer les données
-        $theatres = paginate(collect($data['_embedded']['events']), 10);
-
-        return view('theatres', ['theatres' => $theatres]);
+        return view('home', ['shows' => $shows, 'theatres' => $theatres]);
     }
-
 }
+

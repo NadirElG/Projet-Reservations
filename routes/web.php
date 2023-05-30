@@ -21,6 +21,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\RepresentationController;
 
+use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\StripePaymentController;
 
 
@@ -34,16 +36,22 @@ use App\Http\Controllers\StripePaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+// routes/web.php
+
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
 Route::feeds();
 
 
 Route::get('/feeds', [FeedController::class, 'index'])->name('feeds');
-Route::get('/theatres', [TicketmasterController::class, 'getTheatreData']);
+Route::get('/theatres', [TicketmasterController::class, 'getTheatreData'])->name('theatres');
 
 Route::get('/shows/{id}', [ShowController::class, 'show'])->name('show.details');
 
@@ -80,8 +88,12 @@ Route::get('/location/{id}', [LocationController::class, 'show'])
 Route::get('/show', [ShowController::class, 'index'])->name('show_index');
 Route::get('/show/{id}', [ShowController::class, 'show'])
     ->where('id', '[0-9]+')->name('show_show');
-Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
-Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+//Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
+//Route::post('/show', [ShowController::class, 'store'])->name('show.store');
+Route::resource('show', ShowController::class)->only([
+    'create', 'store'
+]);
+
 /*
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/show/create', [ShowController::class, 'create'])->name('show.create');
