@@ -12,26 +12,7 @@
 
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('artist.index') }}">Artistes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('role.index') }}">Role</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('show_index') }}">Spectacles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('theatres') }}">API Spectacles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('location.index') }}">Location</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('locality.index') }}">Localité</a>
-                </li>
-            </ul>
+            
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -53,6 +34,26 @@
                 </li>
                 @if(Auth::user()->roles->contains('role', 'admin'))
                 <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('artist.index') }}">Artistes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('role.index') }}">Role</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('show_index') }}">Spectacles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('theatres') }}">API Spectacles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('location.index') }}">Location</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('locality.index') }}">Localité</a>
+                    </li>
+                </ul>
                 @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
