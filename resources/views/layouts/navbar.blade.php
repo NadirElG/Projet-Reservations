@@ -22,6 +22,9 @@
                         {{ Auth::user()->name }} ({{ Auth::user()->roles->first()->role }})
                     </span>
                 </li>
+                @if(Auth::user()->roles->contains('role', 'admin'))
+                <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault();

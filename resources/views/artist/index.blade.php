@@ -10,11 +10,6 @@
             <ul class="list-unstyled mb-0">
                 <li><a href="{{ route('artist.create') }}" class="btn btn-primary">Ajouter un artiste</a></li>
             </ul>
-
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger">Déconnexion</button>
-            </form>
         </div>
 
         <div class="table-responsive">
@@ -23,7 +18,7 @@
                     <tr>
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
-                        <th scope="col"></th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,8 +27,15 @@
                             <td>{{ $artist->lastname }}</td>
                             <td>{{ $artist->firstname }}</td>
                             <td>
-                                <a href="{{ route('artist.show', $artist->id) }}" class="btn btn-sm btn-outline-primary">Voir</a>
-                                <a href="{{ route('artist.edit', $artist->id) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                                <div class="d-flex">
+                                    <a href="{{ route('artist.show', $artist->id) }}" class="btn btn-sm btn-outline-primary mr-2">Voir</a>
+                                    <a href="{{ route('artist.edit', $artist->id) }}" class="btn btn-sm btn-outline-secondary mr-2">Modifier</a>
+                                    <form method="post" action="{{ route('artist.delete', $artist->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -43,6 +45,4 @@
         
     </div>
     {{ $artists->links() }}
-
-
 @endsection
