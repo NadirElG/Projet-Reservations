@@ -32,9 +32,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="d-flex justify-content-center">
-            {{ $theatres->links() }}
-        </div>
+        
     </div>
 </body>
 </html>

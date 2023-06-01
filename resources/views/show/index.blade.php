@@ -38,7 +38,9 @@
                 </div>
             @endforeach
             <!-- Affichage de la pagination -->
-            {{ $shows->links() }}
+            <div class="d-flex justify-content-center">
+                {{ $shows->links() }}
+            </div>
         </div>
     </div>
 @endsection
