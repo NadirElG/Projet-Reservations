@@ -74,23 +74,50 @@
                 Événements de théâtre Ticketmaster
             </a>
         </h1>
-        <div class="row">
-            @foreach($theatres as $theatre)
-                <div class="col mb-4">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="{{ $theatre['images'][0]['url'] }}" alt="{{ $theatre['name'] }}">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ $theatre['name'] }}</h4>
-                            <p class="card-text">{{ $theatre['dates']['start']['localDate'] }}</p>
-                            <p class="card-text">{{ $theatre['_embedded']['venues'][0]['name'] }}</p>
-                            <a href="{{ $theatre['url'] }}" class="btn btn-primary">Acheter des billets</a>
+        <div id="carouselTheatres" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
+            <div class="d-flex justify-content-center mb-4">
+                <button
+                    class="carousel-control-prev position-relative"
+                    type="button"
+                    data-mdb-target="#carouselTheatres"
+                    data-mdb-slide="prev"
+                >
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                    class="carousel-control-next position-relative"
+                    type="button"
+                    data-mdb-target="#carouselTheatres"
+                    data-mdb-slide="next"
+                >
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="carousel-inner py-4">
+                @foreach($theatres->chunk(3) as $chunk)
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <div class="container">
+                            <div class="row">
+                                @foreach($chunk as $theatre)
+                                    <div class="col-md-4">
+                                        <div class="card h-100">
+                                            <img class="card-img-top" src="{{ $theatre['images'][0]['url'] }}" alt="{{ $theatre['name'] }}">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ $theatre['name'] }}</h4>
+                                                <p class="card-text">{{ $theatre['dates']['start']['localDate'] }}</p>
+                                                <p class="card-text">{{ $theatre['_embedded']['venues'][0]['name'] }}</p>
+                                                <a href="{{ $theatre['url'] }}" class="btn btn-primary">Acheter des billets</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-
-        
-
     </div>
 @endsection

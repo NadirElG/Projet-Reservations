@@ -37,6 +37,8 @@
                     </div>
                 </div>
             @endforeach
+            <!-- Affichage de la pagination -->
+            {{ $shows->links() }}
         </div>
     </div>
 @endsection

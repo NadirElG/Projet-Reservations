@@ -20,7 +20,7 @@ class ShowController extends Controller
      */
     public function index()
     {
-        $shows = Show::all();
+        $shows = Show::simplePaginate(6);
 
 
         
